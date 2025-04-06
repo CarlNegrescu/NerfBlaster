@@ -12,4 +12,6 @@ class IDistanceSensor
     public: 
         virtual void init() = 0;
 
+        virtual void measure() = 0;
+
 };

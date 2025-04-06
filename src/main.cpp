@@ -22,8 +22,9 @@ int main()
         while(echo);
         timer.stop();
         duration = timer.elapsed_time();
-        
-        printf(duration);
+
+        Queue<float, 32> messageQueue;
+        //printf(duration);
     }
 }
 
