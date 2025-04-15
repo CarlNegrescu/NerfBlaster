@@ -6,6 +6,11 @@
 */
 #include "includes/HC-SR04.h"
 
+
+HCSR04::HCSR04()
+{
+}
+
 Result HCSR04::init(rtos::Queue<float, 32>* messageQueue, PinName trigPin, PinName echoPin)
 {
     osStatus status = osOK;

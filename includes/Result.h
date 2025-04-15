@@ -19,6 +19,13 @@
   ///  name is returned by a given function should be specified in the comments
   ///  above the function's declaration.
 
+#include "mbed.h"
+#include "rtos/Thread.h"
+#include "Timer.h"
+#include "rtos/Queue.h"
+
+#pragma once
+
 typedef enum
   {
     // Note the values are assigned here to make it quick and easy to lookup a result code from a number when debugging.

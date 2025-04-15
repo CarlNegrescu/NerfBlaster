@@ -4,20 +4,24 @@
 * @date 01/04/2025
 * @author Carl Negrescu
 */
-#include "includes/IDistanceSensor.h"
-#include "rtos/Queue.h"
 #include "Result.h"
-#include "mbed.h"
-#include "rtos/Thread.h"
-#include "Timer.h"
-
+#pragma once 
 
 
 
 class HCSR04 
 {
     public:
-        HCSR04(rtos::Queue<float, 32> messageQueue, PinName trigPin, PinName echoPin);
+
+        HCSR04();
+        /// @brief constructor, initalizes the pins
+        ///
+        /// @param messageQueue Takes in the messageQueue to output to
+        /// @param trigPin triger pin to start the measurment
+        /// @param echoPin input pin to read the distance
+        ///
+        /// @retval none 
+        HCSR04(rtos::Queue<float, 32>* messageQueue, PinName trigPin, PinName echoPin);
 
         ~HCSR04();
 
