@@ -42,7 +42,7 @@ void NerfBlaster::executionThread()
         if(_messageQueue->try_get(&distancePtr))
         {
             float distance = *distancePtr;
-            std::printf("Distance is: %f \n", distance);
+            //std::printf("Distance is: %f \n", distance);
             stateMachine(distance);
         }
     }

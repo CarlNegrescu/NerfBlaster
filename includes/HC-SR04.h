@@ -5,6 +5,7 @@
 * @author Carl Negrescu
 */
 #include "Result.h"
+#include <iostream>
 #pragma once 
 
 
@@ -14,14 +15,7 @@ class HCSR04
     public:
 
         HCSR04();
-        /// @brief constructor, initalizes the pins
-        ///
-        /// @param messageQueue Takes in the messageQueue to output to
-        /// @param trigPin triger pin to start the measurment
-        /// @param echoPin input pin to read the distance
-        ///
-        /// @retval none 
-        HCSR04(rtos::Queue<float, 32>* messageQueue, PinName trigPin, PinName echoPin);
+
 
         ~HCSR04();
 
@@ -73,6 +67,6 @@ class HCSR04
         std::chrono::microseconds endTime;
         std::chrono::microseconds duration;
         float _distance = 0;
-        bool _measurementReady = false;
+        volatile bool _measurementReady = false;
 
      };

@@ -13,13 +13,15 @@ std::chrono::microseconds duration;
 PwmOut myServo(PA_0);
 int main()
 {
-    NerfBlaster *blaster = new NerfBlaster();
+    //NerfBlaster *blaster = new NerfBlaster();
     rtos::Queue<float, 16> *messageQueue = new rtos::Queue<float, 16>();
     PinName trigPin = TRIG;
     PinName echoPin = ECHO;
+    HCSR04 *sensor = new HCSR04();
+    sensor->init(messageQueue, trigPin, echoPin);
 
 
-    blaster->init(messageQueue, trigPin, echoPin);
+    //blaster->init(messageQueue, trigPin, echoPin);
 
     // myServo.period_ms(20);
     // myServo.pulsewidth_us(1500); //NB in microseconds

@@ -35,6 +35,7 @@ void HCSR04::measurementThread()
         if(_measurementReady)
         {
             _measurementReady = false;
+            std::cout << "Distance from Sensor Thread: " << _distance << " cm" << std::endl;
             _messageQueue->try_put(&_distance);
         }
         startMeasure();
@@ -60,5 +61,6 @@ void HCSR04::echoFall()
     timer.stop();
     duration = timer.elapsed_time();
     _distance = (duration.count() * 0.0343f) / 2.0f;
+    
     _measurementReady = true;
 }
