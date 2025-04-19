@@ -7,6 +7,7 @@
 *   @date 04/11/2025
 */
 #include "includes/NerfBlaster.h"
+#include <iostream>
 
 NerfBlaster::NerfBlaster()
 :_distance(nullptr)
@@ -16,29 +17,34 @@ NerfBlaster::NerfBlaster()
 
 NerfBlaster::~NerfBlaster() {}
 
-Result NerfBlaster::init(rtos::Queue<float, 32>* messageQueue, PinName trigPin, PinName echoPin)
+Result NerfBlaster::init(rtos::Queue<float, 16>* messageQueue, PinName trigPin, PinName echoPin)
 {
     osStatus status = osOK;
     Result result = RESULT_OK;
 
     _distanceSensor = new HCSR04();
     _messageQueue = messageQueue;
-    thread = new Thread();
-    status = thread->start(callback(this, &NerfBlaster::executionThread));
     result = _distanceSensor->init(_messageQueue, trigPin, echoPin);
-
+    
     if(result != RESULT_OK)
         return result;
-    
+    thread = new Thread(osPriorityNormal, OS_STACK_SIZE, nullptr, "NerfBlaster");
+    status = thread->start(callback(this, &NerfBlaster::executionThread));
+
     return status == osOK ? RESULT_OK : RESULT_ERROR;
 }
 
 void NerfBlaster::executionThread()
 {
+    float* distancePtr = nullptr;
     while(true)
     {
-        if(_messageQueue->try_get(&_distance))
-            stateMachine(*_distance);
+        if(_messageQueue->try_get(&distancePtr))
+        {
+            float distance = *distancePtr;
+            std::printf("Distance is: %f \n", distance);
+            stateMachine(distance);
+        }
     }
 
 }

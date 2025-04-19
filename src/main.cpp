@@ -2,7 +2,7 @@
 #include "includes/NerfBlaster.h"
 
 #define TRIG PC_0
-#define ECHO PC_1
+#define ECHO PC_1  
 
 
 
@@ -10,16 +10,28 @@ Timer timer;
 DigitalOut trigger(TRIG);
 DigitalIn echo(ECHO);
 std::chrono::microseconds duration;
-// main() runs in its own thread in the OS
+PwmOut myServo(PA_0);
 int main()
 {
     NerfBlaster *blaster = new NerfBlaster();
-    rtos::Queue<float, 32> *messageQueue;
+    rtos::Queue<float, 16> *messageQueue = new rtos::Queue<float, 16>();
     PinName trigPin = TRIG;
     PinName echoPin = ECHO;
 
 
     blaster->init(messageQueue, trigPin, echoPin);
+
+    // myServo.period_ms(20);
+    // myServo.pulsewidth_us(1500); //NB in microseconds
+
+    while(true) 
+    {
+        
+
+
+
+    }
+    
 
     //blaster now takes control
     //nothing to do in main.  
