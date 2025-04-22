@@ -24,7 +24,7 @@ class HCSR04
         /// @param none
         ///
         /// @retval Result enum indicating the return status
-        Result init(rtos::Queue<float, 16>* messageQueue, PinName trigPin, PinName echoPin);
+        Result init(rtos::Queue<uint32_t, 16>* messageQueue, PinName trigPin, PinName echoPin);
     
     private:
         /// @brief helper method to measure the distance
@@ -58,7 +58,7 @@ class HCSR04
         void echoFall();
 
     private:
-        rtos::Queue<float, 16> *_messageQueue = nullptr;
+        rtos::Queue<uint32_t, 16>* _messageQueue = nullptr;
         DigitalOut *_trigPin = nullptr;
         InterruptIn *_echoPin = nullptr;
         Thread *thread = nullptr;
@@ -66,7 +66,10 @@ class HCSR04
         std::chrono::microseconds startTime;
         std::chrono::microseconds endTime;
         std::chrono::microseconds duration;
-        float _distance = 0;
+        uint32_t _tickcounterStart;
+        uint32_t _tickcounterEnd;
+        uint32_t _distance = 0;
+        uint32_t _duration = 0;
         volatile bool _measurementReady = false;
 
      };

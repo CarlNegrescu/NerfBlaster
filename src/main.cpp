@@ -1,56 +1,36 @@
 #include "mbed.h"
 #include "includes/NerfBlaster.h"
+#include <cstdint>
 
 #define TRIG PC_0
 #define ECHO PC_1  
 
 
 
-Timer timer;
-DigitalOut trigger(TRIG);
-DigitalIn echo(ECHO);
-std::chrono::microseconds duration;
-PwmOut myServo(PA_0);
 int main()
 {
-    //NerfBlaster *blaster = new NerfBlaster();
-    rtos::Queue<float, 16> *messageQueue = new rtos::Queue<float, 16>();
+    printf("Initializing\n");
+
+    NerfBlaster *blaster = new NerfBlaster();
+    rtos::Queue<uint32_t, 16> *messageQueue = new rtos::Queue<uint32_t, 16>();
     PinName trigPin = TRIG;
     PinName echoPin = ECHO;
-    HCSR04 *sensor = new HCSR04();
-    sensor->init(messageQueue, trigPin, echoPin);
+    DigitalOut *redPin = new DigitalOut(RED_PIN);
+    DigitalOut *yellowPin = new DigitalOut(YELLOW_PIN);
+    DigitalOut *greenPin = new DigitalOut(GREEN_PIN);
+    DigitalOut *nerfMotor = new DigitalOut(MOTOR_PIN);
+    PwmOut *servoMotor = new PwmOut(SERVO_PIN);
+    blaster->init(messageQueue, trigPin, echoPin, redPin, yellowPin, greenPin, nerfMotor, servoMotor);
 
-
-    //blaster->init(messageQueue, trigPin, echoPin);
-
-    // myServo.period_ms(20);
-    // myServo.pulsewidth_us(1500); //NB in microseconds
-
-    while(true) 
+    //Nothing to do here 
+    while(true)
     {
-        
-
-
-
-    }
+        // servoMotor->period(0.02f);
+        // servoMotor->pulsewidth(0.002f);
+        // ThisThread::sleep_for(1000ms); 
+        // servoMotor->pulsewidth(0.001f);
+        ThisThread::sleep_for(1000ms); 
     
-
-    //blaster now takes control
-    //nothing to do in main.  
-    // while (true) 
-
-    // {
-    //     timer.reset();
-    //     trigger = 1;
-    //     ThisThread::sleep_for(0.01);
-    //     trigger = 0;
-    //     timer.start();
-    //     while(echo);
-    //     timer.stop();
-    //     duration = timer.elapsed_time();
-
-    //     Queue<float, 32> messageQueue;
-    //     //printf(duration);
-    // }
+    }
 }
 

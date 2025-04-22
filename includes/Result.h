@@ -24,6 +24,17 @@
 #include "Timer.h"
 #include "rtos/Queue.h"
 
+#define FAR        120
+#define MED        80
+#define CLOSE      50
+#define VERY_CLOSE 30
+#define ATTACK     10
+#define SERVO_PIN  PA_0
+#define RED_PIN    PA_10
+#define YELLOW_PIN PA_9
+#define GREEN_PIN  PA_8
+#define MOTOR_PIN  PB_3
+
 #pragma once
 
 typedef enum

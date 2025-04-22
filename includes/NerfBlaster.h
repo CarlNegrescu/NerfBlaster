@@ -8,12 +8,7 @@
 #include "Result.h"
 #include "includes/HC-SR04.h"
 
-#define VERY_FAR   150
-#define FAR        100
-#define MED        75
-#define CLOSE      50
-#define VERY_CLOSE 20
-#define ATTACK     10
+
 
 
 class NerfBlaster
@@ -21,9 +16,11 @@ class NerfBlaster
     public:
         NerfBlaster();
         ~NerfBlaster();
-        virtual Result init(rtos::Queue<float, 16>* messageQueue, PinName trigPin, PinName echoPin);
+        virtual Result init(rtos::Queue<uint32_t, 16>* messageQueue, PinName trigPin, PinName echoPin,
+                            DigitalOut *redPin, DigitalOut *yellowPin, DigitalOut *greenPin, DigitalOut *_nerfMotor,
+                            PwmOut *servoMotor);
 
-        virtual void stateMachine(float distance);
+        virtual void stateMachine(uint32_t distance);
 
     private:
         virtual void executionThread();
@@ -32,8 +29,13 @@ class NerfBlaster
         
         
     private:
-        rtos::Queue<float, 16>* _messageQueue = nullptr;
-        Thread *thread = nullptr;
-        HCSR04 *_distanceSensor = nullptr;
-        float *_distance;
+       rtos::Queue<uint32_t, 16>* _messageQueue = nullptr;
+        Thread *thread                          = nullptr;
+        HCSR04 *_distanceSensor                 = nullptr;
+        DigitalOut *_redPin                      = nullptr;
+        DigitalOut *_yellowPin                   = nullptr;
+        DigitalOut *_greenPin                    = nullptr;
+        DigitalOut *_nerfMotor                   = nullptr;
+        PwmOut *_servoMotor                      = nullptr;
+        uint32_t *_distance;
 };
