@@ -125,7 +125,7 @@ void NerfBlaster::stateMachine(uint32_t distance)
    if(distance >= ATTACK && distance < VERY_CLOSE)
    {
        //Only Red LED should be on and nerfMotor should be started up
-       // Preparing to shoot if subject gets closer
+       //Preparing to shoot if subject gets closer
         *_yellowPin = 0;
         *_redPin = 1;
         *_greenPin = 0;

@@ -59,9 +59,10 @@ class HCSR04
 
     private:
         rtos::Queue<uint32_t, 16>* _messageQueue = nullptr;
-        DigitalOut *_trigPin = nullptr;
-        InterruptIn *_echoPin = nullptr;
-        Thread *thread = nullptr;
+        DigitalOut *_trigPin                     = nullptr;
+        InterruptIn *_echoPin                    = nullptr;
+        Thread *thread                           = nullptr;
+        volatile bool _measurementReady          = false;
         Timer timer;
         std::chrono::microseconds startTime;
         std::chrono::microseconds endTime;
@@ -70,6 +71,4 @@ class HCSR04
         uint32_t _tickcounterEnd;
         uint32_t _distance = 0;
         uint32_t _duration = 0;
-        volatile bool _measurementReady = false;
-
      };
