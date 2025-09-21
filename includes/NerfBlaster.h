@@ -1,9 +1,9 @@
 /*
-*   @file NerfBlaster.h
+* @file NerfBlaster.h
+* @brief Header file for the main NerfBlaster application class.
 *
-*   
-*
-*   @date 04/11/2025
+* @date 04/11/2025
+* @author Carl Negrescu
 */
 #include "Result.h"
 #include "includes/HC-SR04.h"

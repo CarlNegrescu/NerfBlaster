@@ -1,5 +1,6 @@
 /*
 * @file HC-SR04.h
+* @brief Header file for the HCSR04 ultrasonic distance sensor driver.
 *
 * @date 01/04/2025
 * @author Carl Negrescu
@@ -7,8 +8,6 @@
 #include "Result.h"
 #include <iostream>
 #pragma once 
-
-
 
 class HCSR04 
 {
@@ -19,28 +18,22 @@ class HCSR04
 
         ~HCSR04();
 
-        /// @brief starts the thread to start running the distance sensor
-        ///
-        /// @param none
-        ///
-        /// @retval Result enum indicating the return status
+         /// @brief Initializes the driver, configures GPIO pins, and starts the measurement thread.
+         /// @param messageQueue Pointer to the RTOS queue used to send distance results.
+         /// @param trigPin The GPIO pin connected to the sensor's TRIG input.
+         /// @param echoPin The GPIO pin connected to the sensor's ECHO output.
+         /// @return Result enum indicating success (RESULT_OK) or failure.
+         ///
         Result init(rtos::Queue<uint32_t, 16>* messageQueue, PinName trigPin, PinName echoPin);
     
     private:
-        /// @brief helper method to measure the distance
-        ///
-        /// @param none
-        ///
-        /// @retval none
+       
+         /// @brief Sends the required 10-microsecond pulse to the TRIG pin to start a measurement.
         void startMeasure();
 
         /// @brief Main execution thread, triggers the sensor for 10 microseconds, 
         ///        throws an interrupt when the echo is active,
         ///        then calculates the distances and puts the value into a messageQueue
-        ///
-        /// @param none
-        ///
-        /// @retval none 
         void measurementThread();
         
         /// @brief interrupt when trigger starts
